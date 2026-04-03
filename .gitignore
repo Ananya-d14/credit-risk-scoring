@@ -1,0 +1,22 @@
+# Raw / processed data — keep off GitHub
+data/raw/
+data/processed/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.pkl
+*.joblib
+
+# Deployment model artifacts — these SHOULD be committed
+# (generated locally by save_artifacts.py)
+!models/
+!models/*.joblib
+!models/*.json
+.DS_Store
+Thumbs.db
+*.egg-info/
+dist/
+build/
+.env
