@@ -9,6 +9,8 @@ app_port: 7860
 
 # Credit Risk Scoring API
 
+**🔗 Direct API link: [https://ananyajoshids-credit-risk-scorer.hf.space/docs](https://ananyajoshids-credit-risk-scorer.hf.space/docs)**
+
 This app predicts whether a loan applicant is likely to **repay** or **default** on their loan, based on their credit history.
 
 ---
