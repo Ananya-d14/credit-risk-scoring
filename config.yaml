@@ -1,0 +1,25 @@
+# project config — edit this instead of hardcoding values in notebooks
+
+data_path: "data/raw/CreditScoring.xlsx"
+target_column: "TARGET"
+id_column: "ID"
+
+test_size: 0.2
+random_state: 42
+
+# business parameters (from the original problem statement)
+profit_good_loan: 100
+loss_bad_loan: 500
+
+# modeling
+cv_folds: 5
+n_iter_search: 10  # randomized search iterations
+
+# scorecard params (standard values from Siddiqi ch.10)
+base_score: 600
+pdo: 20        # points to double odds
+target_odds: 50
+
+# paths
+processed_data_dir: "data/processed"
+figures_dir: "reports/figures"
