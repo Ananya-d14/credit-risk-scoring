@@ -9,17 +9,82 @@ app_port: 7860
 
 # Credit Risk Scoring API
 
-**🔗 Direct API link: [https://ananyajoshids-credit-risk-scorer.hf.space/docs](https://ananyajoshids-credit-risk-scorer.hf.space/docs)**
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Hugging_Face-yellow?logo=huggingface)](https://ananyajoshids-credit-risk-scorer.hf.space/docs)
+[![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)](https://www.python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![XGBoost](https://img.shields.io/badge/XGBoost-AUC_0.78-orange)](https://xgboost.readthedocs.io)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com)
 
-This app predicts whether a loan applicant is likely to **repay** or **default** on their loan, based on their credit history.
+End-to-end machine learning pipeline that predicts loan default risk from credit bureau features. Trained on 3,000 loan applications and deployed as a production REST API.
+
+**Live API:** [https://ananyajoshids-credit-risk-scorer.hf.space/docs](https://ananyajoshids-credit-risk-scorer.hf.space/docs)
 
 ---
+
+## Highlights
+
+- **0.78 ROC-AUC** on held-out test set with calibrated probabilities
+- **Profit-optimized threshold** using a $100 / $500 gain–loss matrix instead of generic accuracy
+- **Explainable**: SHAP analysis plus a FICO-style points-based scorecard (Siddiqi 2012)
+- **Production-ready**: FastAPI + Docker, deployed live on Hugging Face Spaces
+- **Reproducible**: full pipeline from raw data to deployed API in 6 documented notebooks
+
+## Project Pipeline
+
+| # | Notebook | What it does |
+|---|----------|--------------|
+| 01 | [EDA](notebooks/01_eda.ipynb) | Distributions, missing values, target imbalance |
+| 02 | [Feature Engineering](notebooks/02_feature_engineering.ipynb) | WoE encoding, Information Value, interaction features |
+| 03 | [Modeling](notebooks/03_modeling.ipynb) | LR / RF / XGBoost / LightGBM with cross-validated tuning |
+| 04 | [Evaluation](notebooks/04_evaluation_and_threshold.ipynb) | KS, decile analysis, profit-optimized threshold |
+| 05 | [Explainability](notebooks/05_explainability.ipynb) | SHAP beeswarm, dependence and partial dependence plots |
+| 06 | [Scorecard](notebooks/06_scorecard.ipynb) | Points-based scorecard + PSI stability check |
+
+## Sample Outputs
+
+| Score Separation | Feature Importance |
+|:---:|:---:|
+| ![Score Distribution](reports/figures/score_distribution.png) | ![SHAP Beeswarm](reports/figures/shap_beeswarm.png) |
+| *Good vs. bad applicants by predicted score* | *SHAP impact direction across features* |
+
+## Repo Structure
+
+```
+.
+├── app.py                   # FastAPI inference service
+├── Dockerfile               # Container for HF Spaces deployment
+├── config.yaml              # Hyperparameters and business config
+├── save_artifacts.py        # Trains model and exports artifacts
+├── src/                     # Modular pipeline (loader, preprocessing,
+│                            #   feature engineering, models,
+│                            #   evaluation, scorecard)
+├── notebooks/               # Full analytical workflow (01–06)
+├── models/                  # Trained model artifacts
+├── data/data_dictionary.md  # Feature definitions
+└── reports/figures/         # All visualizations
+```
+
+## Run Locally
+
+```bash
+git clone https://github.com/Ananya-d14/credit-risk-scoring.git
+cd credit-risk-scoring
+pip install -r requirements.txt
+python save_artifacts.py        # train and export artifacts
+uvicorn app:app --port 7860     # serve API at http://localhost:7860/docs
+```
+
+---
+
+## What This API Does
+
+This app predicts whether a loan applicant is likely to **repay** or **default**, based on their credit history.
 
 ## Step-by-Step Guide (No coding needed!)
 
 ### Step 1: Open the API page
 
-Click the **"API Docs"** tab at the top of this page. This opens an interactive form where you can test the model.
+Open [https://ananyajoshids-credit-risk-scorer.hf.space/docs](https://ananyajoshids-credit-risk-scorer.hf.space/docs) in your browser. This opens an interactive form where you can test the model.
 
 ### Step 2: Find the Predict section
 
